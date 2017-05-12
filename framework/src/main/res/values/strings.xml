@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">开发框架</string>
+    <!--BaseApplication-->
+    <string name="imageCache">EducationNetwork</string>
+    <string name="cache_name">@string/imageCache</string>
+    <!--VolleyErrorHelper-->
+    <!--Volley失败提示-->
+    <string name="no_internet">网络连接失败,请检查网络</string>
+    <string name="generic_server_down">连接服务器超时</string>
+    <string name="generic_error">网络异常,请稍后再试</string>
+</resources>

@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.example.rxjava.frameworkdemo.network.NetworkUtils;
 import com.pts80.framework.mvp.bean.BaseBean;
-import com.pts80.framework.mvp.model.BaseModel;
 
 import rx.Observable;
 
