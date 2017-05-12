@@ -1,4 +1,4 @@
-package com.pts80.framework.mvp.bean;
+package com.pts80.framework.model.bean;
 
 /**
  * @author Mr.zhuang on 2016/12/17.

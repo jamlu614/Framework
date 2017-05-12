@@ -1,4 +1,4 @@
-package com.pts80.framework.mvp.view;
+package com.pts80.framework.ui.view;
 
 /**
  * Author kangyu

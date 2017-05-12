@@ -19,7 +19,7 @@ public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> imple
 
     @Override
     public void initData() {
-
+        setTitle("测试");
     }
 
     @Override

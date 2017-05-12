@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:configChanges">orientation|keyboardHidden</item>
+        <item name="android:windowSoftInputMode">adjustUnspecified|stateHidden</item>
+        <item name="android:listDivider">@drawable/divider_recycler_view_vertical</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="actionMenuTextColor">@color/color_bg_white_00</item>
+    </style>
+
     <!--GifView-->
     <style name="Widget.GifView" parent="@android:style/Widget"></style>
 

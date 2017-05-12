@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import cn.trinea.android.common.util.PreferencesUtils;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.FormBody;
@@ -79,7 +78,7 @@ public class NetworkUtils {
         long currentTime = System.currentTimeMillis();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         final String date = dateFormat.format(currentTime);
-        String token = PreferencesUtils.getString(BaseApplication.getContext(),"");
+        String token = BaseApplication.getSpUtils().getString("token","");
         if (token == null) {
             token = "";
         }
@@ -161,13 +160,13 @@ public class NetworkUtils {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             //没有网络时，使用缓存
-            if (!com.blankj.utilcode.utils.NetworkUtils.isConnected(BaseApplication.getContext())) {
+            if (!com.blankj.utilcode.util.NetworkUtils.isConnected()) {
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .build();
             }
             Response response = chain.proceed(request);
-            if (com.blankj.utilcode.utils.NetworkUtils.isConnected(BaseApplication.getContext())) {
+            if (com.blankj.utilcode.util.NetworkUtils.isConnected()) {
                 //有网络时设置缓存超时时间1分
                 int maxAge = 0;
                 response.newBuilder()

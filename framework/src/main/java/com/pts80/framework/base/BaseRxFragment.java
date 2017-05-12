@@ -3,6 +3,7 @@ package com.pts80.framework.base;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pts80.framework.R;
-import com.pts80.framework.mvp.presenter.BaseRxPresenter;
-import com.pts80.framework.mvp.view.BaseIView;
+import com.pts80.framework.presenter.inf.BaseRxPresenter;
+import com.pts80.framework.ui.view.BaseIView;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -54,8 +55,13 @@ public abstract class BaseRxFragment<V extends BaseIView, T extends BaseRxPresen
      * 初始化标题栏
      */
     private void setupTitleBar() {
-        mTxtTitle = (TextView) getActivity().getWindow().getDecorView().findViewById(R.id.txt_title_title_bar);
-        ImageView imgLeft = (ImageView) getActivity().getWindow().getDecorView().findViewById(R.id.img_back_title_bar);
+        View decorView = getActivity().getWindow().getDecorView();
+        Toolbar toolbar = (Toolbar) decorView.findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        ((BaseRxActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        mTxtTitle = (TextView) decorView.findViewById(R.id.tv_title);
+        ImageView imgLeft = (ImageView) decorView.findViewById(R.id.iv_left);
         if (imgLeft != null && imgLeft.getVisibility() == View.VISIBLE) {
             imgLeft.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -129,31 +135,6 @@ public abstract class BaseRxFragment<V extends BaseIView, T extends BaseRxPresen
             this.mCompositeSubscription = new CompositeSubscription();
         }
         this.mCompositeSubscription.add(s);
-    }
-
-
-//    /***
-//     * 创建加载对话框，重写该方法可以自定义加载对话框
-//     *
-//     * @return
-//     */
-//    public Dialog createProgressDialog() {
-//        return new MyProgressDialog(getActivity(), R.style.ProgressDialogStyle);
-//    }
-
-    /**
-     * 避免重复点击事件
-     * 避免点击速度过快
-     */
-    private long system_time;
-
-    public boolean getToOnClick() {
-        if (System.currentTimeMillis() - system_time > 2000) {
-            system_time = System.currentTimeMillis();
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

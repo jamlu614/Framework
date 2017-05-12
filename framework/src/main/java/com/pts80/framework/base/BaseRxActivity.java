@@ -5,17 +5,20 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pts80.framework.R;
-import com.pts80.framework.mvp.presenter.BaseRxPresenter;
-import com.pts80.framework.mvp.view.BaseIView;
-import com.yanzhenjie.permission.AndPermission;
+import com.pts80.framework.presenter.inf.BaseRxPresenter;
+import com.pts80.framework.ui.view.BaseIView;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -26,13 +29,21 @@ import rx.subscriptions.CompositeSubscription;
 public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresenter<V>> extends AppCompatActivity {
     private TextView mTxtTitle;
     private T presenter;
+    private RxPermissions mRxPermissionManager;//动态权限管理器
+    private int mBackIconRes = 0;//返回按钮图标
+    private ViewGroup mRootView;//根布局
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(setLayoutResID());
+        mRootView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.base_layout, ((ViewGroup) getWindow().getDecorView()), false);
+        ViewGroup contentGroup = (ViewGroup) mRootView.findViewById(R.id.fl_content);
+        View contentView = LayoutInflater.from(this).inflate(setLayoutResID(), mRootView, false);
+        contentGroup.addView(contentView);
+        setContentView(mRootView);
         setupTitleBar();
         presenter = createPresenter();
+        mRxPermissionManager = new RxPermissions(this);
         initViews(savedInstanceState);
         initData();
         initEvent();
@@ -47,16 +58,48 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
      * 初始化标题栏
      */
     private void setupTitleBar() {
-        mTxtTitle = (TextView) getWindow().getDecorView().findViewById(R.id.txt_title_title_bar);
-        ImageView imgLeft = (ImageView) getWindow().getDecorView().findViewById(R.id.img_back_title_bar);
-        if (imgLeft != null && imgLeft.getVisibility() == View.VISIBLE) {
-            imgLeft.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBack(v);
-                }
-            });
+        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        //设置返回按钮图标
+        if (mBackIconRes != 0) {
+            toolbar.setNavigationIcon(getBackIcon());
         }
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(isShowBackIcon()); //设置返回键可用
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isShowBackIcon());
+            if (isShowBackIcon()) {
+                //点击返回键
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBack(v);
+                    }
+                });
+            }
+        }
+
+        mTxtTitle = (TextView) mRootView.findViewById(R.id.tv_title);
+    }
+
+    /**
+     * 是否显示返回按钮
+     *
+     * @return
+     */
+    protected boolean isShowBackIcon() {
+        return true;
+    }
+
+
+    /**
+     * 设置返回按钮样式
+     *
+     * @return
+     */
+    private int getBackIcon() {
+        return mBackIconRes;
     }
 
     /**
@@ -81,8 +124,8 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
     /**
      * 初始化布局组件的监听事件
      */
-    protected abstract void initEvent();
-
+    protected void initEvent() {
+    }
 
     private CompositeSubscription mCompositeSubscription; //这个类的内部是由Set<Subscription> 维护订阅者
 
@@ -140,17 +183,6 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
         onBackPressed();
     }
 
-    /**
-     * 请求权限
-     *
-     * @param requestCode
-     */
-    protected void requestPermission(int requestCode, String permission) {
-        AndPermission.with(this)
-                .requestCode(requestCode)
-                .permission(permission)
-                .send();
-    }
 
     /**
      * 设置editText点击外部区域时可消失
@@ -198,24 +230,21 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
         return false;
     }
 
-    /**
-     * 避免重复点击事件
-     * 避免点击速度过快
-     */
-    private long system_time;
 
-    public boolean getToOnClick() {
-        if (System.currentTimeMillis() - system_time > 2000) {
-            system_time = System.currentTimeMillis();
-            return true;
-        } else {
-            return false;
-        }
+    /**
+     * 获取权限管理器
+     *
+     * @return
+     */
+    public RxPermissions getRxPermissionManager() {
+        return mRxPermissionManager;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.titlebar_menu, menu);
+        menu.findItem(R.id.item2).setVisible(false);
+        return true;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.example.rxjava.frameworkdemo.network;
 
-import com.pts80.framework.mvp.bean.BaseBean;
+import com.pts80.framework.model.bean.BaseBean;
 
 import retrofit2.http.GET;
 import rx.Observable;

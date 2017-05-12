@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.pts80.framework.R;
 import com.pts80.framework.base.BaseApplication;
-import com.pts80.framework.mvp.bean.BaseBean;
+import com.pts80.framework.model.bean.BaseBean;
 import com.pts80.framework.utils.ToastUtils;
-import com.pts80.framework.widget.MyProgressDialog;
+import com.pts80.framework.ui.widget.MyProgressDialog;
 
 import rx.Subscriber;
 

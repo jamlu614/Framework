@@ -3,7 +3,8 @@ package com.example.rxjava.frameworkdemo;
 import android.content.Context;
 
 import com.example.rxjava.frameworkdemo.network.NetworkUtils;
-import com.pts80.framework.mvp.bean.BaseBean;
+import com.pts80.framework.model.BaseRxModel;
+import com.pts80.framework.model.bean.BaseBean;
 
 import rx.Observable;
 
@@ -11,7 +12,7 @@ import rx.Observable;
  * Created by ljb on 2017/4/6.
  */
 
-class TestModel extends BaseModel {
+class TestModel extends BaseRxModel {
 
     TestModel(Context context) {
         super(context);

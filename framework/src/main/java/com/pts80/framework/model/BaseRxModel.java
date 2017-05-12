@@ -1,4 +1,4 @@
-package com.pts80.framework.mvp.model;
+package com.pts80.framework.model;
 
 import android.content.Context;
 

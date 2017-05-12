@@ -1,9 +1,9 @@
-package com.pts80.framework.mvp.presenter.impl;
+package com.pts80.framework.presenter;
 
 import android.content.Context;
 
-import com.pts80.framework.mvp.presenter.BasePresenter;
-import com.pts80.framework.mvp.view.BaseIView;
+import com.pts80.framework.presenter.inf.BasePresenter;
+import com.pts80.framework.ui.view.BaseIView;
 
 import java.lang.ref.WeakReference;
 
@@ -14,11 +14,12 @@ import java.lang.ref.WeakReference;
  * p层基类
  */
 
-public class BasePresenterImpl<V extends BaseIView> implements BasePresenter<V> {
+public class BaseFragmentPresenterImpl<V extends BaseIView> implements BasePresenter<V> {
     public WeakReference<V> mView;
     private Context context;
 
-    public BasePresenterImpl(Context context, V iView) {
+    public BaseFragmentPresenterImpl(Context context, V iView) {
+        mView = new WeakReference<>(iView);
         this.context = context;
     }
 
@@ -29,12 +30,10 @@ public class BasePresenterImpl<V extends BaseIView> implements BasePresenter<V> 
 
     @Override
     public void attachView(V iView) {
-        mView = new WeakReference<>(iView);
     }
 
     @Override
     public void detachView(V iView) {
-        mView.clear();
     }
 
     @Override

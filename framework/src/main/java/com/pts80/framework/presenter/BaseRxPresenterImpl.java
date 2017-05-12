@@ -1,9 +1,9 @@
-package com.pts80.framework.mvp.presenter.impl;
+package com.pts80.framework.presenter;
 
 import android.content.Context;
 
-import com.pts80.framework.mvp.presenter.BaseRxPresenter;
-import com.pts80.framework.mvp.view.BaseIView;
+import com.pts80.framework.presenter.inf.BaseRxPresenter;
+import com.pts80.framework.ui.view.BaseIView;
 
 import java.lang.ref.WeakReference;
 

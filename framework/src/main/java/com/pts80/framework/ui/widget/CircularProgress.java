@@ -1,4 +1,4 @@
-package com.pts80.framework.widget;
+package com.pts80.framework.ui.widget;
 
 import com.pts80.framework.R;
 

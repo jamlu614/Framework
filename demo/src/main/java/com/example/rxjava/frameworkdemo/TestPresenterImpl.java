@@ -3,8 +3,8 @@ package com.example.rxjava.frameworkdemo;
 import android.content.Context;
 
 import com.example.rxjava.frameworkdemo.network.NetworkSubscriber;
-import com.pts80.framework.mvp.bean.BaseBean;
-import com.pts80.framework.mvp.presenter.impl.BaseRxPresenterImpl;
+import com.pts80.framework.model.bean.BaseBean;
+import com.pts80.framework.presenter.BaseRxPresenterImpl;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

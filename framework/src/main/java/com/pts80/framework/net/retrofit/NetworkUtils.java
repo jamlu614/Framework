@@ -37,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class NetworkUtils {
-
+    private static final String HOST = "http://www.edufang.com.cn/";
     /**
      * 解析json数据
      *
@@ -55,7 +55,7 @@ public class NetworkUtils {
     public static Retrofit getInstance(Context context) {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl(BaseInterfaceValue.HOST)
+                    .baseUrl(HOST)
                     .client(genericClient())
                     .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create()))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

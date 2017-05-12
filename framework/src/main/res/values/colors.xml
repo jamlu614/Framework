@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
+    <color name="colorPrimary">#179527</color>
+    <color name="colorPrimary70">#70179527</color>
+    <color name="colorPrimaryDark">#179527</color>
+    <color name="colorAccent">#179527</color>
+
     <!-- 根据实际情况的颜色 -->
     <!-- 透明度 (依次为全透明-不透明) -->
     <color name="color_bg_black_100">#00000000</color>

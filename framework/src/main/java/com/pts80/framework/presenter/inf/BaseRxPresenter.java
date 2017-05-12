@@ -1,4 +1,4 @@
-package com.pts80.framework.mvp.presenter;
+package com.pts80.framework.presenter.inf;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.pts80.framework.widget;
+package com.pts80.framework.ui.widget;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.kongqw.myapplication.MainActivity">
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/ic_launcher"
+        android:orderInCategory="100"
+        android:title="搜索"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item2"
+        android:orderInCategory="100"
+        android:title="搜索"
+        app:showAsAction="ifRoom" />
+</menu>
