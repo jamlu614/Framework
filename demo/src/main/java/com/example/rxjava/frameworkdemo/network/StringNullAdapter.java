@@ -1,0 +1,35 @@
+package com.example.rxjava.frameworkdemo.network;
+
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+
+import java.io.IOException;
+
+/**
+ * Author ljb
+ * Created at 2017/1/13.
+ * Description
+ */
+
+public class StringNullAdapter extends TypeAdapter<String> {
+    @Override
+    public String read(JsonReader reader) throws IOException {
+        // TODO Auto-generated method stub
+        if (reader.peek() == JsonToken.NULL) {
+            reader.nextNull();
+            return "";
+        }
+        return reader.nextString();
+    }
+    @Override
+    public void write(JsonWriter writer, String value) throws IOException {
+        // TODO Auto-generated method stub
+        if (value == null) {
+            writer.nullValue();
+            return;
+        }
+        writer.value(value);
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pts80.framework.widget.CircularProgress xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    app:borderColor="@color/color_A02D31"
+    app:borderWidth="5dp" />

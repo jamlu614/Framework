@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/color_FFFFFF"
+    android:layout_height="45dp">
+
+    <TextView
+        android:id="@+id/txt_title_title_bar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/s13"
+        android:textColor="@color/color_333333"
+        android:gravity="center"
+        android:text="左标题"
+        android:paddingLeft="@dimen/d15"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:id="@+id/txt_title_title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/s18"
+        android:textColor="@color/color_333333"
+        android:gravity="center"
+        android:text="标题"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/txt_title_title_bar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/s13"
+        android:textColor="@color/color_333333"
+        android:gravity="center"
+        android:text="右标题"
+        android:paddingRight="@dimen/d15"
+        android:layout_alignParentRight="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_DEDEDE"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

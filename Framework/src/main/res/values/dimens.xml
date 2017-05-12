@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 常用字体尺寸 -->
+    <dimen name="s8">8sp</dimen>
+    <dimen name="s9">9sp</dimen>
+    <dimen name="s10">10sp</dimen>
+    <dimen name="s11">11sp</dimen>
+    <dimen name="s12">12sp</dimen>
+    <dimen name="s13">13sp</dimen>
+    <dimen name="s14">14sp</dimen>
+    <dimen name="s15">15sp</dimen>
+    <dimen name="s16">16sp</dimen>
+    <dimen name="s17">17sp</dimen>
+    <dimen name="s18">18sp</dimen>
+    <dimen name="s19">19sp</dimen>
+    <dimen name="s20">20sp</dimen>
+    <dimen name="s22">22sp</dimen>
+    <dimen name="s24">24sp</dimen>
+    <dimen name="s30">30sp</dimen>
+    <!-- 常用间隔尺寸 -->
+    <dimen name="d3">3dp</dimen>
+    <dimen name="d5">5dp</dimen>
+    <dimen name="d7">7dp</dimen>
+    <dimen name="d8">8dp</dimen>
+    <dimen name="d10">10dp</dimen>
+    <dimen name="d12">12dp</dimen>
+    <dimen name="d13">13dp</dimen>
+    <dimen name="d14">14dp</dimen>
+    <dimen name="d15">15dp</dimen>
+    <dimen name="d16">16dp</dimen>
+    <dimen name="d17">17dp</dimen>
+    <dimen name="d18">18dp</dimen>
+    <dimen name="d19">19dp</dimen>
+    <dimen name="d20">20dp</dimen>
+    <dimen name="d22">22dp</dimen>
+    <dimen name="d25">25dp</dimen>
+    <dimen name="d30">30dp</dimen>
+    <dimen name="d32">32dp</dimen>
+    <dimen name="d34">34dp</dimen>
+    <dimen name="d35">35dp</dimen>
+    <dimen name="d40">40dp</dimen>
+    <dimen name="d45">45dp</dimen>
+    <dimen name="d50">50dp</dimen>
+    <dimen name="d55">55dp</dimen>
+    <!-- 根据实际情况的字体尺寸 -->
+    <!-- 根据实际情况的间隔尺寸 -->
+    <!-- 主分割线尺寸 -->
+    <dimen name="app_divider_d1">1dp</dimen>
+    <dimen name="app_divider_p1">1px</dimen>
+    <!-- 下拉刷新字体 -->
+    <dimen name="picture_pull_to_refresh_loading_text_size">14dp</dimen>
+    <dimen name="picture_pull_to_refresh_last_update_time_text_size">10dp</dimen>
+    <dimen name="picture_pull_to_refresh_last_update_time_top_margin">6dp</dimen>
+    <dimen name="picture_pull_to_refresh_footer_height">40dp</dimen>
+    <!-- com.android.framework.widget.multiimageselector -->
+    <dimen name="image_size">120dp</dimen>
+    <dimen name="space_size">2dp</dimen>
+    <dimen name="folder_cover_size">72dp</dimen>
+</resources>
