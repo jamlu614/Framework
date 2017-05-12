@@ -3,7 +3,6 @@ package com.pts80.framework.net.retrofit;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.BuildConfig;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -97,8 +96,6 @@ public class NetworkUtils {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
-                if (BuildConfig.DEBUG) {
-                }
                 if (!(request.body() instanceof MultipartBody)) {
                     StringBuilder body = new StringBuilder("{");
                     int paramNum = ((FormBody) request.body()).size();
@@ -115,6 +112,9 @@ public class NetworkUtils {
                     body.append("}");
                     Log.e("request", String.format("发送请求: %s\n参数：%s",
                             request.url(), body.toString()));
+                } else {
+                    Log.e("request", String.format("发送请求: %s",
+                            request.url()));
                 }
                 return chain.proceed(request);
             }

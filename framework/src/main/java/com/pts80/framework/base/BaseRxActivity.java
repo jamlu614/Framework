@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.pts80.framework.R;
 import com.pts80.framework.presenter.inf.BaseRxPresenter;
 import com.pts80.framework.ui.view.BaseIView;
+import com.pts80.framework.utils.ActivityUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import rx.Subscription;
@@ -32,10 +33,12 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
     private RxPermissions mRxPermissionManager;//动态权限管理器
     private int mBackIconRes = 0;//返回按钮图标
     private ViewGroup mRootView;//根布局
+    protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityUtils.add(this);
         mRootView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.base_layout, ((ViewGroup) getWindow().getDecorView()), false);
         ViewGroup contentGroup = (ViewGroup) mRootView.findViewById(R.id.fl_content);
         View contentView = LayoutInflater.from(this).inflate(setLayoutResID(), mRootView, false);
@@ -58,20 +61,20 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
      * 初始化标题栏
      */
     private void setupTitleBar() {
-        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
 
         //设置返回按钮图标
         if (mBackIconRes != 0) {
-            toolbar.setNavigationIcon(getBackIcon());
+            mToolbar.setNavigationIcon(setBackIcon());
         }
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(isShowBackIcon()); //设置返回键可用
             getSupportActionBar().setDisplayHomeAsUpEnabled(isShowBackIcon());
             if (isShowBackIcon()) {
                 //点击返回键
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onBack(v);
@@ -81,6 +84,10 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
         }
 
         mTxtTitle = (TextView) mRootView.findViewById(R.id.tv_title);
+    }
+
+    public Toolbar getToolbar() {
+        return mToolbar;
     }
 
     /**
@@ -98,7 +105,7 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
      *
      * @return
      */
-    private int getBackIcon() {
+    private int setBackIcon() {
         return mBackIconRes;
     }
 
@@ -113,7 +120,6 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
      * 初始化布局组件
      */
     protected void initViews(Bundle savedInstanceState) {
-
     }
 
     /**
@@ -230,7 +236,6 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
         return false;
     }
 
-
     /**
      * 获取权限管理器
      *
@@ -245,6 +250,12 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
         getMenuInflater().inflate(R.menu.titlebar_menu, menu);
         menu.findItem(R.id.item2).setVisible(false);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityUtils.remove(this);
     }
 
 }

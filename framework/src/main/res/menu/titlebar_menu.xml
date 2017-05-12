@@ -6,11 +6,11 @@
         android:id="@+id/item1"
         android:icon="@drawable/ic_launcher"
         android:orderInCategory="100"
-        android:title="搜索"
+        android:title="图标"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/item2"
-        android:orderInCategory="100"
-        android:title="搜索"
+        android:orderInCategory="90"
+        android:title="菜单"
         app:showAsAction="ifRoom" />
 </menu>

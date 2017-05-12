@@ -30,4 +30,5 @@ public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> imple
     public void doClick(View view) {
         getPresenter().getPageData();
     }
+
 }
