@@ -11,14 +11,12 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimary">
 
-        <TextView
-            android:id="@id/tv_title"
+        <android.support.v7.widget.ViewStubCompat
+            android:id="@id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="标题"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"/>
+            />
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout

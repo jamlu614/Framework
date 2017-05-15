@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="toolbar" type="id"/>
+    <item name="title" type="id"/>
     <item name="tv_title" type="id"/>
     <item name="iv_left" type="id"/>
     <item name="iv_right" type="id"/>
+    <item name="iv_arrow" type="id"/>
 </resources>
