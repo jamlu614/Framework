@@ -30,14 +30,14 @@ import rx.subscriptions.CompositeSubscription;
  * Activity基类，需扩展，可根据项目做调整
  */
 public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresenter<V>> extends AppCompatActivity {
-    private TextView mTvTitle;
     private T presenter;
     private RxPermissions mRxPermissionManager;//动态权限管理器
     private int mBackIconRes = 0;//返回按钮图标
     private ViewGroup mRootView;//根布局
-    protected Toolbar mToolbar;
-    private int mTitleRes =-1;//标题资源
-    private ViewStubCompat mTitleSub;
+    protected Toolbar mToolbar;//标题栏
+    private TextView mTvTitle;//标题控件
+    private int mTitleRes = -1;//标题资源
+    private View mTitleLayout;//标题布局
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
         presenter = createPresenter();
         mRxPermissionManager = new RxPermissions(this);
         initViews(savedInstanceState);
-        setupTitleBar();
+        setupTitleBar(mRootView);
         initData();
         initEvent();
     }
@@ -63,9 +63,10 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
 
     /**
      * 初始化标题栏
+     * @param rootView
      */
-    private void setupTitleBar() {
-        mToolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+    protected void setupTitleBar(ViewGroup rootView) {
+        mToolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
 
@@ -86,24 +87,39 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
                 });
             }
         }
-        mTitleSub = (ViewStubCompat) mRootView.findViewById(R.id.title);
+        ViewStubCompat titleSub = (ViewStubCompat) rootView.findViewById(R.id.title);
         if (mTitleRes == -1) {//默认标题布局
-            mTitleSub.setLayoutResource(R.layout.title_textview);
-            mTitleSub.inflate();
+            titleSub.setLayoutResource(R.layout.title_textview);
+            titleSub.inflate();
             mTvTitle = (TextView) findViewById(R.id.tv_title);
-        } else {
-            mTitleSub.setLayoutResource(mTitleRes);
-            mTitleSub.inflate();
+        } else {//自定义标题布局
+            titleSub.setLayoutResource(mTitleRes);
+            titleSub.inflate();
             mTvTitle = (TextView) findViewById(R.id.tv_title);
+            mTitleLayout = findViewById(R.id.titleLayout);
         }
     }
 
     /**
      * 设置标题布局
+     *
      * @param res
      */
     public void setTitleRes(@LayoutRes int res) {
         mTitleRes = res;
+    }
+
+    /**
+     * 获取标题布局
+     *
+     * @return
+     */
+    public View getTitleLayout() {
+        if (mTitleLayout != null) {
+            return mTitleLayout;
+        } else {
+            return mTvTitle;
+        }
     }
 
     public Toolbar getToolbar() {

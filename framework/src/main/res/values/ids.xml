@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--标题栏id-->
     <item name="toolbar" type="id"/>
+    <!--标题布局id-->
+    <item name="titleLayout" type="id"/>
+    <!--标题临时布局id-->
     <item name="title" type="id"/>
+    <!--标题描述id-->
     <item name="tv_title" type="id"/>
-    <item name="iv_left" type="id"/>
-    <item name="iv_right" type="id"/>
-    <item name="iv_arrow" type="id"/>
 </resources>

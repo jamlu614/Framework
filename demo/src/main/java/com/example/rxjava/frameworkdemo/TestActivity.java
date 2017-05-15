@@ -2,6 +2,7 @@ package com.example.rxjava.frameworkdemo;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.pts80.framework.base.BaseRxActivity;
@@ -29,15 +30,29 @@ public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> imple
     }
 
     @Override
+    protected void setupTitleBar(ViewGroup rootView) {
+        super.setupTitleBar(rootView);
+        mArrow = (ImageView) rootView.findViewById(R.id.iv_arrow);
+    }
+
+    @Override
     public void initData() {
         setTitle("测试");
-        mArrow = (ImageView) getToolbar().findViewById(R.id.iv_arrow);
-
     }
 
     @Override
     public void initEvent() {
-
+        getTitleLayout().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mIsUp) {
+                    mArrow.setImageResource(R.drawable.ic_arrow_up_white);
+                } else {
+                    mArrow.setImageResource(R.drawable.ic_arrow_down_white);
+                }
+                mIsUp = !mIsUp;
+            }
+        });
     }
 
     public void doClick(View view) {
