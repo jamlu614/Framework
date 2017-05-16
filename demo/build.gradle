@@ -7,7 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,5 +28,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
+//    compile 'com.github.jamlu614:Framework:-SNAPSHOT'
+//    compile 'com.jamlu:framework:1.0.0'
     compile project(':framework')
 }

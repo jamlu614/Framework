@@ -63,10 +63,4 @@ dependencies {
     compile 'com.android.support:support-annotations:26.0.0-alpha1'
 }
 
-ext {
-    PUBLISH_GROUP_ID = 'cn.jamlu'
-    PUBLISH_ARTIFACT_ID = 'framework'
-    PUBLISH_VERSION = '1.0.0'
-}
-
 apply from: "https://raw.githubusercontent.com/xiaopansky/android-library-publish-to-jcenter/master/bintrayUpload.gradle"
