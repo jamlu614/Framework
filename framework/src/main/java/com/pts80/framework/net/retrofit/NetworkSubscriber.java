@@ -54,7 +54,7 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     public void onError(Throwable e) {
         e.printStackTrace();
         if (mCallback != null) {
-            mCallback.onFailure("服务器访问超时");
+            mCallback.onFailure(getContext().getString(R.string.generic_server_down));
         }
         dismissProgressDialog();
     }

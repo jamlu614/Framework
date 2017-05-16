@@ -11,7 +11,7 @@
         <item name="colorControlNormal">@android:color/white</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="actionMenuTextColor">@color/color_bg_white_00</item>
+        <item name="actionMenuTextColor">@color/color_bg_white</item>
     </style>
 
     <!--GifView-->
