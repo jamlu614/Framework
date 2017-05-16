@@ -9,10 +9,8 @@ import com.pts80.framework.base.BaseRxActivity;
 
 public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> implements ITestView {
 
-
     private ImageView mArrow;
     private boolean mIsUp;
-
     @Override
     public int setLayoutResID() {
         return R.layout.activity_test;

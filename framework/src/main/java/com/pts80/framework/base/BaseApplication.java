@@ -26,7 +26,7 @@ public class BaseApplication extends Application {
         mContext = getApplicationContext();
         //初始化工具类
         Utils.init(this);
-        mSpUtils = new SPUtils("myApp");
+        mSpUtils = new SPUtils(getPackageName());
     }
 
     public static Context getContext() {

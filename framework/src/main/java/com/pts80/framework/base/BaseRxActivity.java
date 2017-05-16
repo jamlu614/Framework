@@ -3,6 +3,7 @@ package com.pts80.framework.base;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.AnyRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -58,10 +59,12 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
     /**
      * 实现setContentView()
      */
+    @LayoutRes
     protected abstract int setLayoutResID();
 
     /**
      * 初始化标题栏
+     *
      * @param rootView
      */
     protected void setupTitleBar(ViewGroup rootView) {
@@ -140,7 +143,8 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
      *
      * @return
      */
-    private int setBackIcon() {
+    @AnyRes
+    protected int setBackIcon() {
         return mBackIconRes;
     }
 

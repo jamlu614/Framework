@@ -55,4 +55,5 @@ dependencies {
     //图片选择器
     compile 'cn.finalteam.rxgalleryfinal:library:1.0.1'
     compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    compile 'com.android.support:support-annotations:26.0.0-alpha1'
 }

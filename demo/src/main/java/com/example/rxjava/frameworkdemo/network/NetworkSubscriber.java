@@ -1,12 +1,12 @@
 package com.example.rxjava.frameworkdemo.network;
 
 import android.content.Context;
+import android.support.annotation.UiThread;
 
 import com.example.rxjava.frameworkdemo.R;
-import com.pts80.framework.base.BaseApplication;
 import com.pts80.framework.model.bean.BaseBean;
-import com.pts80.framework.utils.ToastUtils;
 import com.pts80.framework.ui.widget.MyProgressDialog;
+import com.pts80.framework.utils.ToastUtils;
 
 import rx.Subscriber;
 
@@ -68,7 +68,10 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
         } else if (httpCode == TOKEN_EXPIRED) {//token过期
             //清空token
 //            PreferencesUtils.putString(BaseApplication.getContext(), PrefUtils.TOKEN, "");
-            ToastUtils.show(BaseApplication.getContext(), "登录超时");
+            ToastUtils.show(t.getMsg());
+            if (mCallback != null) {//响应错误回调
+                mCallback.onFailure(t.getError());
+            }
         } else {
             if (mCallback != null) {//响应错误回调
                 mCallback.onFailure(t.getError());
@@ -79,6 +82,7 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     /**
      * 显示加载对话框
      */
+    @UiThread
     protected void showProgressDialog() {
         if (mIsShowDialog) {
             mMyProgressDialog = new MyProgressDialog(getContext(), R.style.ProgressDialogStyle);
@@ -89,6 +93,7 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     /**
      * 隐藏加载对话框
      */
+    @UiThread
     protected void dismissProgressDialog() {
         if (mIsShowDialog) {
             if (mMyProgressDialog != null && mMyProgressDialog.isShowing()) {
@@ -99,20 +104,22 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     /**
      * 接口回调结果
      */
-    public interface Callback<T> {
+    public static abstract class Callback<T> {
         /**
          * 成功回调
          *
          * @param t
          */
-       void onSuccess(T t);
+     public abstract   void onSuccess(T t);
 
         /**
          * 失败回调
          *
          * @param msg
          */
-        void onFailure(String msg);
+      public void onFailure(String msg){
+          ToastUtils.show(msg);
+      };
     }
 
 }
