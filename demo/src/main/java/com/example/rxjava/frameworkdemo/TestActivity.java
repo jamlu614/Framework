@@ -11,6 +11,7 @@ public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> imple
 
     private ImageView mArrow;
     private boolean mIsUp;
+
     @Override
     public int setLayoutResID() {
         return R.layout.activity_test;
@@ -19,7 +20,7 @@ public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> imple
     @Override
     protected TestPresenter createPresenter() {
         HomePresenterFactory factory = HomePresenterFactory.getInstance();
-        return (TestPresenter) factory.create(this,this,HomePresenterFactory.TYPE_TEST);
+        return (TestPresenter) factory.create(this, this, HomePresenterFactory.TYPE_TEST);
     }
 
     @Override
