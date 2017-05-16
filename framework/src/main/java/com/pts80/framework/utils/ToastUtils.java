@@ -13,7 +13,6 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class ToastUtils {
     /**
-     * @hide
      */
     @IntDef({LENGTH_SHORT, LENGTH_LONG})
     @Retention(RetentionPolicy.SOURCE)
