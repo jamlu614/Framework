@@ -14,12 +14,14 @@ import rx.schedulers.Schedulers;
  * Created by ljb on 2017/4/6.
  */
 
-public class TestPresenterImpl extends BaseRxPresenterImpl<ITestView> implements TestPresenter{
+public class TestPresenterImpl extends BaseRxPresenterImpl<ITestView> implements TestPresenter {
     private TestModel mModel;
+
     public TestPresenterImpl(Context context, ITestView iView) {
         super(context, iView);
-        mModel = new TestModel(context);
+        mModel = new TestModel();
     }
+
     /**
      *
      */
@@ -27,7 +29,7 @@ public class TestPresenterImpl extends BaseRxPresenterImpl<ITestView> implements
         Subscription subscribe = mModel.getSinaTouTiao()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new NetworkSubscriber<>(getContext(),false, new NetworkSubscriber.Callback<BaseBean>() {
+                .subscribe(new NetworkSubscriber<>(getContext(), false, new NetworkSubscriber.Callback<BaseBean>() {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
 

@@ -1,7 +1,5 @@
 package com.example.rxjava.frameworkdemo;
 
-import android.content.Context;
-
 import com.example.rxjava.frameworkdemo.network.NetworkUtils;
 import com.pts80.framework.model.BaseRxModel;
 import com.pts80.framework.model.bean.BaseBean;
@@ -13,10 +11,6 @@ import rx.Observable;
  */
 
 class TestModel extends BaseRxModel {
-
-    TestModel(Context context) {
-        super(context);
-    }
 
     /**
      * 获取新浪头条

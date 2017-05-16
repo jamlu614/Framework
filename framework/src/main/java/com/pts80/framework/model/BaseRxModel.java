@@ -2,6 +2,8 @@ package com.pts80.framework.model;
 
 import android.content.Context;
 
+import com.pts80.framework.base.BaseApplication;
+
 /**
  * Author ljb
  * Created at 2016/10/24.
@@ -12,12 +14,9 @@ import android.content.Context;
 public abstract class BaseRxModel {
 
     public Context getContext() {
-        return context;
+        return BaseApplication.getContext();
     }
 
-    protected Context context;
-
-    public BaseRxModel(Context context) {
-        this.context = context;
+    public BaseRxModel() {
     }
 }

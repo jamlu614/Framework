@@ -33,7 +33,6 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
     private T presenter;
     private RxPermissions mRxPermissionManager;//动态权限管理器
     private int mBackIconRes = 0;//返回按钮图标
-    private ViewGroup mRootView;//根布局
     protected Toolbar mToolbar;//标题栏
     private TextView mTvTitle;//标题控件
     private int mTitleRes = -1;//标题资源
@@ -43,15 +42,15 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityUtils.add(this);
-        mRootView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.base_layout, ((ViewGroup) getWindow().getDecorView()), false);
-        ViewGroup contentGroup = (ViewGroup) mRootView.findViewById(R.id.fl_content);
-        View contentView = LayoutInflater.from(this).inflate(setLayoutResID(), mRootView, false);
+        ViewGroup rootView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.base_layout, ((ViewGroup) getWindow().getDecorView()), false);
+        ViewGroup contentGroup = (ViewGroup) rootView.findViewById(R.id.fl_content);
+        View contentView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
         contentGroup.addView(contentView);
-        setContentView(mRootView);
+        setContentView(rootView);
         presenter = createPresenter();
         mRxPermissionManager = new RxPermissions(this);
         initViews(savedInstanceState);
-        setupTitleBar(mRootView);
+        setupTitleBar(rootView);
         initData();
         initEvent();
     }
