@@ -5,6 +5,7 @@ import android.content.Context;
 import com.jamlu.framework.presenter.inf.BaseRxPresenter;
 import com.jamlu.framework.ui.view.BaseIView;
 
+
 /**
  * Created by ljb on 2017/5/16.
  */

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.jamlu.framework.base.BaseRxActivity;
 
+
 public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> implements ITestView {
 
     private ImageView mArrow;

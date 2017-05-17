@@ -1,5 +1,6 @@
 package com.example.rxjava.frameworkdemo.network;
 
+
 import com.jamlu.framework.model.bean.BaseBean;
 
 import retrofit2.http.GET;

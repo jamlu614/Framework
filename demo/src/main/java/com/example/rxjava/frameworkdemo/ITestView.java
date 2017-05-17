@@ -1,5 +1,6 @@
 package com.example.rxjava.frameworkdemo;
 
+
 import com.jamlu.framework.ui.view.BaseIView;
 
 /**

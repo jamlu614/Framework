@@ -29,6 +29,6 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
 //    compile 'com.github.jamlu614:Framework:-SNAPSHOT'
-//    compile 'com.jamlu:framework:1.0.0'
-    compile project(':framework')
+    compile 'com.jamlu:framework:1.0.2'
+//    compile project(':framework')
 }
