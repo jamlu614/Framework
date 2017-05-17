@@ -1,4 +1,4 @@
-package com.jamlu.framework.retrofit;
+package com.jamlu.framework.newwork;
 
 import com.google.gson.GsonBuilder;
 import com.jamlu.framework.utils.NullStringToEmptyAdapterFactory;
