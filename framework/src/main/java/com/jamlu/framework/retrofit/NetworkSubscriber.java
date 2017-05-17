@@ -1,9 +1,9 @@
-package com.example.rxjava.frameworkdemo.network;
+package com.jamlu.framework.retrofit;
 
 import android.content.Context;
 import android.support.annotation.UiThread;
 
-import com.example.rxjava.frameworkdemo.R;
+import com.pts80.framework.R;
 import com.jamlu.framework.model.bean.BaseBean;
 import com.jamlu.framework.ui.widget.MyProgressDialog;
 import com.jamlu.framework.utils.ToastUtils;
@@ -17,7 +17,7 @@ import rx.Subscriber;
 
 public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     public static final int TOKEN_EXPIRED = 303;//token过期
-    public static final int RESPOND_SUCCESS =0;//响应成功
+    public static final int RESPOND_SUCCESS = 0;//响应成功
     public static final int RESPOND_FAILURE = 1;//响应失败
     private MyProgressDialog mMyProgressDialog;
     protected Context context;
@@ -29,6 +29,7 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
         this.context = context;
         mCallback = callback;
     }
+
     public NetworkSubscriber(Context context, boolean isShowDialog, Callback<T> callback) {
         this.context = context;
         mCallback = callback;
@@ -53,7 +54,7 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     public void onError(Throwable e) {
         e.printStackTrace();
         if (mCallback != null) {
-            mCallback.onFailure("服务器访问超时");
+            mCallback.onFailure(getContext().getString(R.string.generic_server_down));
         }
         dismissProgressDialog();
     }
@@ -101,6 +102,7 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
             }
         }
     }
+
     /**
      * 接口回调结果
      */
@@ -110,16 +112,16 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
          *
          * @param t
          */
-     public abstract   void onSuccess(T t);
+        public abstract void onSuccess(T t);
 
         /**
          * 失败回调
          *
          * @param msg
          */
-      public void onFailure(String msg){
-          ToastUtils.show(msg);
-      };
+        public void onFailure(String msg) {
+            ToastUtils.show(msg);
+        }
     }
 
 }

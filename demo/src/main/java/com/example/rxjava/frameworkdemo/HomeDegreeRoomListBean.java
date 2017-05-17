@@ -1,6 +1,6 @@
 package com.example.rxjava.frameworkdemo;
 
-import com.pts80.framework.model.bean.BaseBean;
+import com.jamlu.framework.model.bean.BaseBean;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.pts80.framework.base.BaseRxActivity;
+import com.jamlu.framework.base.BaseRxActivity;
 
 public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> implements ITestView {
 

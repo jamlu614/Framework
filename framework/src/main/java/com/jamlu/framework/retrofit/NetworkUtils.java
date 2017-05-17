@@ -1,8 +1,7 @@
-package com.example.rxjava.frameworkdemo.network;
+package com.jamlu.framework.retrofit;
 
 import com.google.gson.GsonBuilder;
-import com.jamlu.framework.base.BaseApplication;
-import com.jamlu.framework.retrofit.NetworkManager;
+import com.jamlu.framework.utils.NullStringToEmptyAdapterFactory;
 
 /**
  * Author ljb
@@ -21,13 +20,4 @@ public class NetworkUtils {
     public static <T> T parseJson(String json, Class<T> clazz) {
         return new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create().fromJson(json, clazz);
     }
-
-    /**
-     * 获取看房服务
-     * @return
-     */
-    public static WeatherService getWeatherService() {
-        return NetworkManager.getInstance(BaseApplication.getContext()).create(WeatherService.class);
-    }
-
 }

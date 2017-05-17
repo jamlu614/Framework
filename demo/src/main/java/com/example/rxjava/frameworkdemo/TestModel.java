@@ -1,8 +1,8 @@
 package com.example.rxjava.frameworkdemo;
 
 import com.example.rxjava.frameworkdemo.network.NetworkUtils;
-import com.pts80.framework.model.BaseRxModel;
-import com.pts80.framework.model.bean.BaseBean;
+import com.jamlu.framework.model.BaseRxModel;
+import com.jamlu.framework.model.bean.BaseBean;
 
 import rx.Observable;
 

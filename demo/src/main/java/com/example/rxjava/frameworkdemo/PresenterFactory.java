@@ -2,8 +2,8 @@ package com.example.rxjava.frameworkdemo;
 
 import android.content.Context;
 
-import com.pts80.framework.presenter.inf.BaseRxPresenter;
-import com.pts80.framework.ui.view.BaseIView;
+import com.jamlu.framework.presenter.inf.BaseRxPresenter;
+import com.jamlu.framework.ui.view.BaseIView;
 
 /**
  * Created by ljb on 2017/5/16.
