@@ -1,6 +1,5 @@
 package com.jamlu.framework.ui.widget;
 
-import com.pts80.framework.R;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -17,6 +16,8 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+
+import com.jamlu.framework.R;
 
 public class CircularProgress extends View {
 

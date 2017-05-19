@@ -9,7 +9,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.pts80.framework.R;
+import com.jamlu.framework.R;
+
 
 /**
  * Created by Cuneyt on 4.10.2015.

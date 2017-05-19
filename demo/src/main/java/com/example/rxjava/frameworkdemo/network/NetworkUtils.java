@@ -2,7 +2,7 @@ package com.example.rxjava.frameworkdemo.network;
 
 import com.google.gson.GsonBuilder;
 import com.jamlu.framework.base.BaseApplication;
-import com.jamlu.framework.retrofit.NetworkManager;
+import com.jamlu.framework.newwork.NetworkManager;
 
 /**
  * Author ljb

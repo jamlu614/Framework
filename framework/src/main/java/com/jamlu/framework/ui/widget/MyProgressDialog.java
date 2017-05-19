@@ -5,7 +5,8 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.WindowManager;
 
-import com.pts80.framework.R;
+import com.jamlu.framework.R;
+
 
 public class MyProgressDialog extends Dialog {
 

@@ -18,7 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.pts80.framework.R;
+import com.jamlu.framework.R;
 import com.jamlu.framework.presenter.inf.BaseRxPresenter;
 import com.jamlu.framework.ui.view.BaseIView;
 import com.jamlu.framework.utils.ActivityUtils;

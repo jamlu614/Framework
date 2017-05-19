@@ -3,7 +3,7 @@ package com.jamlu.framework.newwork;
 import android.content.Context;
 import android.support.annotation.UiThread;
 
-import com.pts80.framework.R;
+import com.jamlu.framework.R;
 import com.jamlu.framework.model.bean.BaseBean;
 import com.jamlu.framework.ui.widget.MyProgressDialog;
 import com.jamlu.framework.utils.ToastUtils;
