@@ -1,7 +1,7 @@
 package com.jamlu.framework.newwork;
 
 import com.google.gson.GsonBuilder;
-import com.jamlu.framework.utils.NullStringToEmptyAdapterFactory;
+import com.jamlu.framework.utils.helper.NullStringToEmptyAdapterFactory;
 
 /**
  * Author ljb

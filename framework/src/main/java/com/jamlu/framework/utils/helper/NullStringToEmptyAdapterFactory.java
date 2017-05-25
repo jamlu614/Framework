@@ -1,4 +1,4 @@
-package com.jamlu.framework.utils;
+package com.jamlu.framework.utils.helper;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;

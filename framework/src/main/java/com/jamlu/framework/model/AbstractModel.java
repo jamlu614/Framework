@@ -11,12 +11,12 @@ import com.jamlu.framework.base.BaseApplication;
  * model基类
  */
 
-public abstract class BaseRxModel {
+public abstract class AbstractModel {
 
     public Context getContext() {
         return BaseApplication.getContext();
     }
 
-    public BaseRxModel() {
+    public AbstractModel() {
     }
 }

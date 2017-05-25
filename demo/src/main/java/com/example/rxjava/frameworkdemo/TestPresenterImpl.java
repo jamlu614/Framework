@@ -19,7 +19,7 @@ public class TestPresenterImpl extends BaseRxPresenterImpl<ITestView> implements
 
     public TestPresenterImpl(Context context, ITestView iView) {
         super(context, iView);
-        mModel = new TestModel();
+        mModel = new TestModelFactory().create();
     }
 
     /**

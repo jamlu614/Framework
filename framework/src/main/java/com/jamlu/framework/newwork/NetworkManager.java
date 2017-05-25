@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.google.gson.GsonBuilder;
 import com.jamlu.framework.base.BaseApplication;
-import com.jamlu.framework.utils.NullStringToEmptyAdapterFactory;
+import com.jamlu.framework.utils.helper.NullStringToEmptyAdapterFactory;
 
 import java.io.File;
 import java.io.IOException;

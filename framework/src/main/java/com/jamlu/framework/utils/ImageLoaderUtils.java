@@ -10,6 +10,7 @@ import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jamlu.framework.R;
+import com.jamlu.framework.utils.helper.CustomShapeTransformation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

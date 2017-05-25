@@ -20,8 +20,7 @@ public class TestActivity extends BaseRxActivity<ITestView, TestPresenter> imple
 
     @Override
     protected TestPresenter createPresenter() {
-        HomePresenterFactory factory = HomePresenterFactory.getInstance();
-        return (TestPresenter) factory.create(this, this, HomePresenterFactory.TYPE_TEST);
+        return  new TestPresenterFactory(this, this).create();
     }
 
     @Override

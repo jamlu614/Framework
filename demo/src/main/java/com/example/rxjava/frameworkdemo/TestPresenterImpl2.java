@@ -15,11 +15,11 @@ import rx.schedulers.Schedulers;
  */
 
 public class TestPresenterImpl2 extends BaseRxPresenterImpl<ITestView> implements TestPresenter {
-    private TestModel mModel;
+    private TestModelImpl mModel;
 
     public TestPresenterImpl2(Context context, ITestView iView) {
         super(context, iView);
-        mModel = new TestModel();
+        mModel = new TestModelImpl();
     }
 
     /**

@@ -2,7 +2,7 @@ package com.jamlu.framework.presenter;
 
 import android.content.Context;
 
-import com.jamlu.framework.presenter.inf.BasePresenter;
+import com.jamlu.framework.presenter.inf.BaseRxPresenter;
 import com.jamlu.framework.ui.view.BaseIView;
 
 import java.lang.ref.WeakReference;
@@ -14,7 +14,7 @@ import java.lang.ref.WeakReference;
  * p层基类
  */
 
-public class BaseFragmentPresenterImpl<V extends BaseIView> implements BasePresenter<V> {
+public abstract class BaseFragmentPresenterImpl<V extends BaseIView> implements BaseRxPresenter<V> {
     public WeakReference<V> mView;
     private Context context;
 
@@ -28,13 +28,6 @@ public class BaseFragmentPresenterImpl<V extends BaseIView> implements BasePrese
         return context;
     }
 
-    @Override
-    public void attachView(V iView) {
-    }
-
-    @Override
-    public void detachView(V iView) {
-    }
 
     @Override
     public V getView() {

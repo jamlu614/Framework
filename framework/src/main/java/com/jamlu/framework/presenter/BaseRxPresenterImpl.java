@@ -17,7 +17,7 @@ import rx.subscriptions.CompositeSubscription;
  * p层基类
  */
 
-public class BaseRxPresenterImpl<V extends BaseIView> implements BaseRxPresenter<V> {
+public abstract class BaseRxPresenterImpl<V extends BaseIView> implements BaseRxPresenter<V> {
     public WeakReference<V> mView;
     private Context context;
     private CompositeSubscription mCompositeSubscription; //这个类的内部是由Set<Subscription> 维护订阅者

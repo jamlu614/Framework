@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Kang on 2017/3/16.
  */
 
-public class HomeDegreeRoomListBean extends BaseBean {
+public class TestBean extends BaseBean {
 
 
     private List<HomesBean> homes;
