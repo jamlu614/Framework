@@ -2,5 +2,5 @@
 
 ## gradle
 
-compile 'com.jamlu:framework:1.0.4'
+compile 'com.jamlu:framework:1.0.5'
 
