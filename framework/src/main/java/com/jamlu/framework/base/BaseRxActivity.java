@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.AnyRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewStubCompat;
@@ -20,17 +22,24 @@ import android.widget.TextView;
 
 import com.jamlu.framework.R;
 import com.jamlu.framework.presenter.inf.BaseRxPresenter;
-import com.jamlu.framework.ui.view.BaseIView;
 import com.jamlu.framework.utils.ActivityUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.List;
+
+import rx.Observable;
 import rx.Subscription;
+import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
+ * Created by ljb on 2017/05/26
  * Activity基类，需扩展，可根据项目做调整
  */
-public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresenter<V>> extends AppCompatActivity {
+public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompatActivity implements View.OnClickListener {
     private T presenter;
     private RxPermissions mRxPermissionManager;//动态权限管理器
     private int mBackIconRes = 0;//返回按钮图标
@@ -39,21 +48,97 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
     private int mTitleRes = -1;//标题资源
     private View mTitleLayout;//标题布局
 
+    //正常
+    public final static int STATUS_SUCCESS = 1;
+    //服务器出错
+    public final static int STATUS_ERROR = 2;
+    //没有网络
+    public final static int STATUS_NO_NETWORK = 3;
+    //当前状态,默认正常
+    private int mCurrentStatus = STATUS_SUCCESS;
+    //内容布局
+    private ViewGroup mContentView;
+    //根布局
+    private ViewGroup mRootView;
+    private Bundle mSavedInstanceState;
+
+
+    @IntDef({STATUS_SUCCESS, STATUS_ERROR, STATUS_NO_NETWORK})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PageStatus {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mSavedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
         ActivityUtils.add(this);
-        ViewGroup rootView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.base_layout, ((ViewGroup) getWindow().getDecorView()), false);
-        ViewGroup contentGroup = (ViewGroup) rootView.findViewById(R.id.fl_content);
-        View contentView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
-        contentGroup.addView(contentView);
-        setContentView(rootView);
+        mRootView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.base_layout, ((ViewGroup) getWindow().getDecorView()), false);
         presenter = createPresenter();
         mRxPermissionManager = new RxPermissions(this);
-        initViews(savedInstanceState);
-        setupTitleBar(rootView);
-        initData();
-        initEvent();
+        //设置内容布局
+        setContentView(mRootView);
+        init(mRootView);
+    }
+
+    /**
+     * 初始化界面
+     *
+     * @param rootView
+     */
+    private void init(ViewGroup rootView) {
+        setupTitleBar(mRootView);
+        //生成内容布局
+        mContentView = (ViewGroup) rootView.findViewById(R.id.fl_content);
+        //初始化内容布局
+        initContentView(rootView);
+    }
+
+    /**
+     * 初始化内容布局
+     *
+     * @param rootView
+     */
+    private void initContentView(ViewGroup rootView) {
+        View contentView;
+        switch (mCurrentStatus) {
+            case STATUS_SUCCESS://正常
+                contentView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
+                mContentView.addView(contentView);
+                initViews(mSavedInstanceState);
+                initData();
+                initEvent();
+                break;
+            case STATUS_NO_NETWORK://没有网络
+                contentView = LayoutInflater.from(this).inflate(R.layout.status_no_network, rootView, false);
+                mContentView.addView(contentView);
+                View btnReload = rootView.findViewById(R.id.btn_reload);
+                btnReload.setOnClickListener(this);
+                break;
+            case STATUS_ERROR://服务器出错
+                contentView = LayoutInflater.from(this).inflate(R.layout.status_error, rootView, false);
+                mContentView.addView(contentView);
+                View btnReload2 = rootView.findViewById(R.id.btn_reload);
+                btnReload2.setOnClickListener(this);
+                break;
+            default://默认正常
+                contentView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
+                mContentView.addView(contentView);
+                break;
+        }
+    }
+
+    /**
+     * 绘制页面
+     *
+     * @param status
+     */
+    public void loadView(@PageStatus int status) {
+        if (mCurrentStatus != status) {
+            mCurrentStatus = status;
+            mContentView.removeAllViews();
+            initContentView(mRootView);
+        }
     }
 
     /**
@@ -146,31 +231,6 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
     @AnyRes
     protected int setBackIcon() {
         return mBackIconRes;
-    }
-
-    /**
-     * 初始化P层实现类
-     *
-     * @return
-     */
-    protected abstract T createPresenter();
-
-    /**
-     * 初始化布局组件
-     */
-    protected void initViews(Bundle savedInstanceState) {
-
-    }
-
-    /**
-     * 初始化布局组件的数据
-     */
-    protected abstract void initData();
-
-    /**
-     * 初始化布局组件的监听事件
-     */
-    protected void initEvent() {
     }
 
     private CompositeSubscription mCompositeSubscription; //这个类的内部是由Set<Subscription> 维护订阅者
@@ -298,4 +358,69 @@ public abstract class BaseRxActivity<V extends BaseIView, T extends BaseRxPresen
         ActivityUtils.remove(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        //重新加载数据
+        onReload();
+    }
+
+
+    /**
+     * 如果要响应activity的重新加载按钮，请重写该方法
+     */
+    protected void onReload() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        Observable.just(fragments).filter(new Func1<List<Fragment>, Boolean>() {
+            @Override
+            public Boolean call(List<Fragment> fragments) {
+                return fragments != null&&fragments.size()>0;
+            }
+        }).flatMap(new Func1<List<Fragment>, Observable<Fragment>>() {
+            @Override
+            public Observable<Fragment> call(List<Fragment> fragments) {
+                return Observable.from(fragments);
+            }
+        }).filter(new Func1<Fragment, Boolean>() {
+            @Override
+            public Boolean call(Fragment fragment) {
+                return fragment != null && !fragment.isHidden() && fragment instanceof BaseRxFragment;
+            }
+        }).map(new Func1<Fragment, BaseRxFragment>() {
+            @Override
+            public BaseRxFragment call(Fragment fragment) {
+                return ((BaseRxFragment) fragment);
+            }
+        }).subscribe(new Action1<BaseRxFragment>() {
+            @Override
+            public void call(BaseRxFragment baseRxFragment) {
+                //回调fragment的重新加载方法
+                baseRxFragment.onReload();
+            }
+        });
+    }
+
+    /**
+     * 初始化P层实现类
+     *
+     * @return
+     */
+    protected abstract T createPresenter();
+
+    /**
+     * 初始化布局组件
+     */
+    protected void initViews(Bundle savedInstanceState) {
+
+    }
+
+    /**
+     * 初始化布局组件的数据
+     */
+    protected abstract void initData();
+
+    /**
+     * 初始化布局组件的监听事件
+     */
+    protected void initEvent() {
+    }
 }

@@ -8,5 +8,4 @@ package com.jamlu.framework.ui.view;
  */
 
 public interface BaseIView {
-
 }

@@ -2,8 +2,8 @@ package com.example.rxjava.frameworkdemo;
 
 import android.content.Context;
 
-import com.example.rxjava.frameworkdemo.network.NetworkSubscriber;
 import com.jamlu.framework.model.bean.BaseBean;
+import com.jamlu.framework.newwork.NetworkSubscriber;
 import com.jamlu.framework.presenter.BaseRxPresenterImpl;
 
 import rx.Subscription;
@@ -34,11 +34,6 @@ public class TestPresenterImpl2 extends BaseRxPresenterImpl<ITestView> implement
                 .subscribe(new NetworkSubscriber<>(getContext(), false, new NetworkSubscriber.Callback<BaseBean>() {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
-
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
 
                     }
                 }));

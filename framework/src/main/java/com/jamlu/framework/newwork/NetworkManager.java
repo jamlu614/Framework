@@ -1,6 +1,7 @@
 package com.jamlu.framework.newwork;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -17,7 +18,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
@@ -57,29 +57,44 @@ public class NetworkManager {
         long currentTime = System.currentTimeMillis();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         final String date = dateFormat.format(currentTime);
-        String token = BaseApplication.getSpUtils().getString("token","");
+        String token = BaseApplication.getSpUtils().getString("token", "");
         if (token == null) {
             token = "";
         }
         final String finalToken = token;
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        File cacheFile = new File(BaseApplication.getContext().getCacheDir(), "CacheData");
-        Cache cache = new Cache(cacheFile, 1024 * 1024 * 10); //10Mb
-        httpClientBuilder
-                .cache(cache)
-                .retryOnConnectionFailure(true)
-                .connectTimeout(15, TimeUnit.SECONDS);
+//        File cacheFile = new File(BaseApplication.getContext().getCacheDir(), "CacheData");
+//        Cache cache = new Cache(cacheFile, 1024 * 1024 * 10); //10Mb
+//        httpClientBuilder
+//                .cache(cache)
+//                .retryOnConnectionFailure(true)
+//                .connectTimeout(15, TimeUnit.SECONDS);
         //添加请求头信息
         httpClientBuilder.addInterceptor(new Interceptor() {
             @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request()
-                        .newBuilder()
-                        .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                        .addHeader("Accept-Encoding", "gzip, deflate")
-                        .addHeader("Connection", "keep-alive")
-                        .addHeader("Accept", "*/*")
-                        .build();
+            public Response intercept(@NonNull Chain chain) throws IOException {
+                Request request = chain.request();
+                if (!com.blankj.utilcode.util.NetworkUtils.isConnected()) {
+                    CacheControl cacheControl = new CacheControl.Builder()
+                            .onlyIfCached()
+                            .maxStale(7, TimeUnit.DAYS)
+                            .build();
+
+                    request = request.newBuilder()
+                            .removeHeader("Pragma")
+                            .cacheControl(cacheControl)
+                            .build();
+                } else {
+                    request = chain.request()
+                            .newBuilder()
+                            .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                            .addHeader("Accept-Encoding", "gzip, deflate")
+//                        .addHeader("Connection", "keep-alive")
+                            .addHeader("Connection", "close")
+                            .addHeader("Accept", "*/*")
+                            .build();
+                }
+
                 return chain.proceed(request);
             }
 
@@ -87,27 +102,33 @@ public class NetworkManager {
         //添加请求拦截器
         httpClientBuilder.addInterceptor(new Interceptor() {
             @Override
-            public Response intercept(Chain chain) throws IOException {
+            public Response intercept(@NonNull Chain chain) throws IOException {
                 Request request = chain.request();
 //                if (BuildConfig.DEBUG) {
 //                }
-                if (request.body() instanceof FormBody) {
-                    StringBuilder body = new StringBuilder("{");
-                    int paramNum = ((FormBody) request.body()).size();
-                    for (int i = 0; i < paramNum; i++) {
-                        String name = ((FormBody) request.body()).name(i);
-                        String value = ((FormBody) request.body()).value(i);
-                        body.append(name)
-                                .append("=")
-                                .append(value);
-                        if (i != paramNum - 1) {
-                            body.append(",");
+                if (request.body() != null) {
+                    if (request.body() instanceof FormBody) {
+                        StringBuilder body = new StringBuilder("{");
+                        int paramNum = ((FormBody) request.body()).size();
+                        for (int i = 0; i < paramNum; i++) {
+                            String name = ((FormBody) request.body()).name(i);
+                            String value = ((FormBody) request.body()).value(i);
+                            body.append(name)
+                                    .append("=")
+                                    .append(value);
+                            if (i != paramNum - 1) {
+                                body.append(",");
+                            }
                         }
+                        body.append("}");
+                        Log.e("request", String.format("发送请求: %s\n参数：%s",
+                                request.url(), body.toString()));
+                    } else {
+                        Log.e("request", String.format("发送请求: %s",
+                                request.url()));
                     }
-                    body.append("}");
-                    Log.e("request", String.format("发送请求: %s\n参数：%s",
-                            request.url(), body.toString()));
                 }
+
                 return chain.proceed(request);
             }
         });

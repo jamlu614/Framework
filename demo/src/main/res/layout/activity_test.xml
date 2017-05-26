@@ -7,8 +7,25 @@
     >
 
     <Button
+        android:id="@+id/btn_requestNetwork"
         android:layout_width="match_parent"
         android:layout_height="@dimen/d50"
         android:onClick="doClick"
         android:text="请求网络"/>
+    <Button
+        android:id="@+id/btn_toFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d50"
+        android:onClick="doClick"
+        android:text="显示fragment"/>
+    <Button
+        android:id="@+id/btn_change"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d50"
+        android:onClick="doClick"
+        android:text="未改变文本"/>
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

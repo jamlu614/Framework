@@ -1,26 +1,40 @@
 package com.jamlu.framework.base;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jamlu.framework.presenter.inf.BaseRxPresenter;
-import com.jamlu.framework.ui.view.BaseIView;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.jamlu.framework.base.BaseRxActivity.STATUS_ERROR;
+import static com.jamlu.framework.base.BaseRxActivity.STATUS_NO_NETWORK;
+import static com.jamlu.framework.base.BaseRxActivity.STATUS_SUCCESS;
+
 /**
+ * Created by ljb on 2017/05/26
  * Fragment基类
  */
-public abstract class BaseRxFragment<V extends BaseIView, T extends BaseRxPresenter<V>> extends Fragment {
+public abstract class BaseRxFragment<T extends BaseRxPresenter> extends Fragment {
     Unbinder unbinder;
     protected T presenter;
+
+    @IntDef({STATUS_SUCCESS, STATUS_ERROR, STATUS_NO_NETWORK})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PageStatus {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,34 +47,17 @@ public abstract class BaseRxFragment<V extends BaseIView, T extends BaseRxPresen
         return view;
     }
 
-
     /**
-     * 实现setContentView()
-     */
-    public abstract int setLayoutResID();
-
-    /**
-     * 初始化布局组件
-     */
-    protected void initViews(View view) {
-    }
-
-    /**
-     * 初始化P层实现类
+     * 绘制页面
      *
-     * @return
+     * @param status
      */
-    protected abstract T createPresenter();
-
-    /**
-     * 初始化布局组件的数据
-     */
-    public abstract void initData();
-
-    /**
-     * 初始化布局组件的监听事件
-     */
-    public abstract void initEvent();
+    public void loadView(@PageStatus int status) {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof BaseRxActivity) {
+            ((BaseRxActivity) activity).loadView(status);
+        }
+    }
 
     @Override
     public void onStop() {
@@ -84,7 +81,7 @@ public abstract class BaseRxFragment<V extends BaseIView, T extends BaseRxPresen
      *
      * @return
      */
-    public T getPresenter() {
+    protected T getPresenter() {
         return presenter;
     }
 
@@ -109,5 +106,44 @@ public abstract class BaseRxFragment<V extends BaseIView, T extends BaseRxPresen
         }
         this.mCompositeSubscription.add(s);
     }
+
+
+    /**
+     * 如果要响应重新加载按钮，请重写该方法
+     */
+    protected void onReload() {
+    }
+
+
+    /**
+     * 实现setContentView()
+     */
+    protected abstract int setLayoutResID();
+
+    /**
+     * 初始化布局组件
+     */
+    protected void initViews(View view) {
+    }
+
+    /**
+     * 初始化P层实现类
+     *
+     * @return
+     */
+    protected abstract T createPresenter();
+
+    /**
+     * 初始化布局组件的数据
+     */
+    protected abstract void initData();
+
+    /**
+     * 初始化布局组件的监听事件
+     */
+    protected void initEvent() {
+    }
+
+    ;
 
 }

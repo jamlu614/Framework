@@ -8,4 +8,6 @@
     <item name="title" type="id"/>
     <!--标题描述id-->
     <item name="tv_title" type="id"/>
+    <!--重新加载按钮-->
+    <item name="btn_reload" type="id"/>
 </resources>

@@ -2,14 +2,13 @@ package com.jamlu.framework.base;
 
 /**
  * Created by ljb on 2017/5/25.
- * 工厂抽象类
+ * 工厂接口
  */
 
-public abstract class AbstractFactory<T> {
+public interface Factory<V>{
     /**
      * 创建对象
-     *
      * @return
      */
-    public abstract T create();
+    V create();
 }

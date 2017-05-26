@@ -2,8 +2,9 @@ package com.example.rxjava.frameworkdemo;
 
 import android.content.Context;
 
-import com.example.rxjava.frameworkdemo.network.NetworkSubscriber;
+import com.jamlu.framework.base.BaseRxActivity;
 import com.jamlu.framework.model.bean.BaseBean;
+import com.jamlu.framework.newwork.NetworkSubscriber;
 import com.jamlu.framework.presenter.BaseRxPresenterImpl;
 
 import rx.Subscription;
@@ -32,12 +33,18 @@ public class TestPresenterImpl extends BaseRxPresenterImpl<ITestView> implements
                 .subscribe(new NetworkSubscriber<>(getContext(), false, new NetworkSubscriber.Callback<BaseBean>() {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
-
+                        getView().loadView(BaseRxActivity.STATUS_SUCCESS);
+//                        getView().loadView(BaseRxActivity.STATUS_ERROR);
                     }
 
                     @Override
-                    public void onFailure(String msg) {
-
+                    public void onFailure(int httpCode, String msg) {
+                        super.onFailure(httpCode, msg);
+                        if (httpCode == NetworkSubscriber.RESPOND_NO_NETWORK) {
+                            getView().loadView(BaseRxActivity.STATUS_NO_NETWORK);
+                        } else {
+                            getView().loadView(BaseRxActivity.STATUS_SUCCESS);
+                        }
                     }
                 }));
         addSubscription(subscribe);

@@ -7,4 +7,6 @@
     <string name="no_internet">网络连接失败,请检查网络</string>
     <string name="generic_server_down">连接服务器超时</string>
     <string name="generic_error">网络异常,请稍后再试</string>
+    <string name="status_wrong">服务器出错</string>
+    <string name="status_no_network">连接超时，请重试</string>
 </resources>

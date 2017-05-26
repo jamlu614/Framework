@@ -8,4 +8,9 @@ import com.jamlu.framework.ui.view.BaseIView;
  */
 
 public interface ITestView extends BaseIView {
+    /**
+     * 加载页面
+     * @param status
+     */
+    void loadView(int status);
 }

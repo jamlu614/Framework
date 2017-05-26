@@ -17,8 +17,9 @@ import rx.Subscriber;
 
 public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     public static final int TOKEN_EXPIRED = 303;//token过期
-    public static final int RESPOND_SUCCESS = 0;//响应成功
-    public static final int RESPOND_FAILURE = 1;//响应失败
+    public static final int RESPOND_SUCCESS = 1;//响应成功
+    public static final int RESPOND_FAILURE = 2;//响应失败
+    public static final int RESPOND_NO_NETWORK = 0;//没有网络
     private MyProgressDialog mMyProgressDialog;
     protected Context context;
     //回调接口
@@ -54,14 +55,18 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
     public void onError(Throwable e) {
         e.printStackTrace();
         if (mCallback != null) {
-            mCallback.onFailure(getContext().getString(R.string.generic_server_down));
+            if (com.blankj.utilcode.util.NetworkUtils.isConnected()) {
+                mCallback.onFailure(RESPOND_FAILURE, "服务器访问超时");
+            } else {
+                mCallback.onFailure(RESPOND_NO_NETWORK, "连接网络超时，请重试");
+            }
         }
         dismissProgressDialog();
     }
 
     @Override
     public void onNext(T t) {
-        int httpCode = t.getErrno();
+        int httpCode = t.getHttpCode();
         if (httpCode == RESPOND_SUCCESS) {//返回成功回调
             if (mCallback != null) {
                 mCallback.onSuccess(t);
@@ -71,11 +76,11 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
 //            PreferencesUtils.putString(BaseApplication.getContext(), PrefUtils.TOKEN, "");
             ToastUtils.show(t.getMsg());
             if (mCallback != null) {//响应错误回调
-                mCallback.onFailure(t.getError());
+                mCallback.onFailure(RESPOND_FAILURE, t.getMsg());
             }
         } else {
             if (mCallback != null) {//响应错误回调
-                mCallback.onFailure(t.getError());
+                mCallback.onFailure(RESPOND_FAILURE, t.getMsg());
             }
         }
     }
@@ -115,13 +120,16 @@ public class NetworkSubscriber<T extends BaseBean> extends Subscriber<T> {
         public abstract void onSuccess(T t);
 
         /**
-         * 失败回调
+         * 出错回调
          *
-         * @param msg
+         * @param httpCode 请求码
+         * @param msg      错误信息
          */
-        public void onFailure(String msg) {
+        public void onFailure(int httpCode, String msg) {
             ToastUtils.show(msg);
         }
+
+        ;
     }
 
 }
