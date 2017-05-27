@@ -76,9 +76,9 @@ public class TestActivity extends BaseRxActivity<TestPresenter> implements ITest
             }
         });
     }
-//
-//    @Override
-//    protected void onReload() {
-//        getPresenter().getPageData();
-//    }
+
+    @Override
+    protected void onReload() {
+        getPresenter().getPageData();
+    }
 }

@@ -61,6 +61,7 @@ public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompa
     //根布局
     private ViewGroup mRootView;
     private Bundle mSavedInstanceState;
+    private View mSuccessView;
 
 
     @IntDef({STATUS_SUCCESS, STATUS_ERROR, STATUS_NO_NETWORK})
@@ -99,31 +100,58 @@ public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompa
      *
      * @param rootView
      */
-    private void initContentView(ViewGroup rootView) {
-        View contentView;
+    private void initContentView(final ViewGroup rootView) {
+        final View contentView;
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
         switch (mCurrentStatus) {
             case STATUS_SUCCESS://正常
-                contentView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
-                mContentView.addView(contentView);
-                initViews(mSavedInstanceState);
-                initData();
-                initEvent();
+                if (mSuccessView == null) {
+                    mSuccessView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
+                    mContentView.addView(mSuccessView);
+                    initViews(mSavedInstanceState);
+                    initData();
+                    initEvent();
+                }
                 break;
             case STATUS_NO_NETWORK://没有网络
                 contentView = LayoutInflater.from(this).inflate(R.layout.status_no_network, rootView, false);
-                mContentView.addView(contentView);
+                boolean hasUseFragment = false;//是否有可用的fragment
+                if (fragments != null && fragments.size() > 0) {
+                    for (Fragment fragment : fragments) {
+                        if (fragment != null && !fragment.isHidden() && fragment instanceof BaseRxFragment && fragment.getView() != null) {
+                            ((ViewGroup) fragment.getView()).addView(contentView);
+                            hasUseFragment = true;
+                        }
+                    }
+                    if (!hasUseFragment) {
+                        mContentView.addView(contentView);
+                    }
+                } else {
+                    mContentView.addView(contentView);
+                }
                 View btnReload = rootView.findViewById(R.id.btn_reload);
-                btnReload.setOnClickListener(this);
+                btnReload.setOnClickListener(BaseRxActivity.this);
                 break;
             case STATUS_ERROR://服务器出错
                 contentView = LayoutInflater.from(this).inflate(R.layout.status_error, rootView, false);
-                mContentView.addView(contentView);
+                boolean hasUseFragment2 = false;//是否有可用的fragment
+                if (fragments != null && fragments.size() > 0) {
+                    for (Fragment fragment : fragments) {
+                        if (fragment != null && !fragment.isHidden() && fragment instanceof BaseRxFragment && fragment.getView() != null) {
+                            ((ViewGroup) fragment.getView()).addView(contentView);
+                            hasUseFragment2 = true;
+                        }
+                    }
+                    if (!hasUseFragment2) {
+                        mContentView.addView(contentView);
+                    }
+                } else {
+                    mContentView.addView(contentView);
+                }
                 View btnReload2 = rootView.findViewById(R.id.btn_reload);
-                btnReload2.setOnClickListener(this);
+                btnReload2.setOnClickListener(BaseRxActivity.this);
                 break;
-            default://默认正常
-                contentView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
-                mContentView.addView(contentView);
+            default:
                 break;
         }
     }
@@ -136,7 +164,27 @@ public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompa
     public void loadView(@PageStatus int status) {
         if (mCurrentStatus != status) {
             mCurrentStatus = status;
-            mContentView.removeAllViews();
+            for (int i = 0; i < mContentView.getChildCount(); i++) {
+                View childView = mContentView.getChildAt(i);
+                if (!childView.equals(mSuccessView)) {//如果不是成功布局，删除布局
+                    mContentView.removeView(childView);
+                } else {
+                    List<Fragment> fragments = getSupportFragmentManager().getFragments();
+                    if (fragments != null && fragments.size() > 0) {
+                        for (Fragment fragment : fragments) {
+                            if (fragment != null && fragment.getView() != null) {
+                                for (int j = 0; j < ((ViewGroup) fragment.getView()).getChildCount(); j++) {
+                                    View child = ((ViewGroup) fragment.getView()).getChildAt(j);
+                                    if (child.getId() == R.id.fl_error || child.getId() == R.id.fl_noNetwork) {
+                                        //如果是错误布局或者是没有网络布局,删除布局
+                                        ((ViewGroup) fragment.getView()).removeView(child);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             initContentView(mRootView);
         }
     }
@@ -373,7 +421,7 @@ public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompa
         Observable.just(fragments).filter(new Func1<List<Fragment>, Boolean>() {
             @Override
             public Boolean call(List<Fragment> fragments) {
-                return fragments != null&&fragments.size()>0;
+                return fragments != null && fragments.size() > 0;
             }
         }).flatMap(new Func1<List<Fragment>, Observable<Fragment>>() {
             @Override
@@ -383,6 +431,7 @@ public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompa
         }).filter(new Func1<Fragment, Boolean>() {
             @Override
             public Boolean call(Fragment fragment) {
+                //判断fragment是否可用
                 return fragment != null && !fragment.isHidden() && fragment instanceof BaseRxFragment;
             }
         }).map(new Func1<Fragment, BaseRxFragment>() {
@@ -393,7 +442,7 @@ public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompa
         }).subscribe(new Action1<BaseRxFragment>() {
             @Override
             public void call(BaseRxFragment baseRxFragment) {
-                //回调fragment的重新加载方法
+                //回调fragment重新加载方法
                 baseRxFragment.onReload();
             }
         });

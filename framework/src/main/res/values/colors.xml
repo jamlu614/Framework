@@ -18,7 +18,7 @@
     <color name="color_black_70">#B2000000</color>
     <color name="color_black_80">#C8000000</color>
     <color name="color_black_90">#E4000000</color>
-    <color name="color_bg_black">#F0000000</color>
+    <color name="color_bg_black">#ff000000</color>
 
     <color name="color_white_100">#00ffffff</color>
     <color name="color_white_10">#16ffffff</color>
@@ -30,7 +30,7 @@
     <color name="color_white_70">#B2ffffff</color>
     <color name="color_white_80">#C8ffffff</color>
     <color name="color_white_90">#E4ffffff</color>
-    <color name="color_bg_white">#F0ffffff</color>
+    <color name="color_bg_white">#ffffffff</color>
 
 	<color name="color_11000000">#11000000</color>
 	<!-- 白色 -->
