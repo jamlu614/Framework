@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jamlu.framework.R;
-import com.jamlu.framework.presenter.inf.BaseRxPresenter;
+import com.jamlu.framework.presenter.BaseRxPresenter;
 import com.jamlu.framework.utils.ActivityUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -29,6 +29,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -108,6 +109,7 @@ public abstract class BaseRxActivity<T extends BaseRxPresenter> extends AppCompa
                 if (mSuccessView == null) {
                     mSuccessView = LayoutInflater.from(this).inflate(setLayoutResID(), rootView, false);
                     mContentView.addView(mSuccessView);
+                    ButterKnife.bind(this);
                     initViews(mSavedInstanceState);
                     initData();
                     initEvent();

@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jamlu.framework.presenter.inf.BaseRxPresenter;
+import com.jamlu.framework.presenter.BaseRxPresenter;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
