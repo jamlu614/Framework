@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        icon="@drawable/ic_home_main_normal"
+        id="@+id/tab_home"
+        title="首页"/>
+    <tab
+        icon="@drawable/ic_category_main_normal"
+        id="@+id/tab_category"
+        title="分类"/>
+    <tab
+        icon="@drawable/ic_change_main_normal"
+        id="@+id/tab_change"
+        title="兑换"/>
+    <tab
+        icon="@drawable/ic_shopcar_main_normal"
+        id="@+id/tab_shopcar"
+        title="购物车"/>
+    <tab
+        icon="@drawable/ic_mine_main_normal"
+        id="@+id/tab_mine"
+        title="我的"/>
+</tabs>
